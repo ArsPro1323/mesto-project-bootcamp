@@ -1,0 +1,10 @@
+@import url("__add-button-logo/profile__add-button-logo.css");
+
+.profile__add-button {
+  width: 100%;
+  margin-top: 20%;
+  margin-bottom: 20%;
+  background-color: #000;
+  border: 2px solid #fff;
+  color: #fff;
+}

@@ -1,0 +1,10 @@
+@import url("__image/card__image.css");
+
+.card {
+  width: calc((74vw - 17px * 2) / 3);
+  aspect-ratio: 282 / 361;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
