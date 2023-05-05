@@ -2,3 +2,16 @@
   width: 15%;
   margin-bottom: 41px;
 }
+
+@media screen and (max-width: 930px) {
+  .header__logo {
+    width: 30%;
+    margin-bottom: 41px;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .header__logo {
+    width: 45%;
+  }
+}

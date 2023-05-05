@@ -1,10 +1,26 @@
-@import url("__add-button-logo/profile__add-button-logo.css");
-
 .profile__add-button {
   width: 100%;
-  margin-top: 20%;
-  margin-bottom: 20%;
+  aspect-ratio: 3 / 1;
+  margin: auto 0;
   background-color: #000;
   border: 2px solid #fff;
   color: #fff;
+}
+
+.profile__add-button:hover {
+  opacity: 0.7;
+}
+
+@media screen and (max-width: 930px) {
+  .profile__add-button {
+   aspect-ratio: 282 / 50;
+   grid-column: 1 / span 2;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .profile__add-button {
+   aspect-ratio: 282 / 50;
+   grid-column: 1;
+  }
 }

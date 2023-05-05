@@ -1,6 +1,11 @@
 .root {
+  font-family: Inter, Arial, sans-serif;
   background: #000;
   color: #fff;
+  width: 74vw;
+  max-width: 947.2px;
   margin: 0;
-  padding: 45px 13vw 45px 13vw;
+  padding: 45px 0 45px 0;
+  margin: 0 auto;
+  z-index: 0;
 }

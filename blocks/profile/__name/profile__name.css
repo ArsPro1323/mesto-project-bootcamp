@@ -1,4 +1,7 @@
 .profile__name {
-  margin-bottom: 10px;
+  margin-bottom: 0;
   margin-top: auto;
+  font-size: 42px;
+  line-height: 48px;
+  font-weight: 500;
 }
