@@ -2,7 +2,14 @@
   display: grid;
   height: auto;
   padding-left: 30px;
-  grid-template-columns: auto auto;
-  grid-template-rows: repeat(2, 1fr);
+  grid-template-columns: 3fr 2fr;
+  grid-template-rows: 1fr 1fr;
   margin: 0;
+}
+
+@media screen and (max-width: 320px) {
+  .profile__info {
+    grid-template-columns: 5fr 1fr;
+    padding-left: 0;
+  }
 }

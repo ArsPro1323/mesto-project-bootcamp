@@ -1,4 +1,13 @@
 .profile__image {
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
   width: 100%;
   border-radius: 50%;
+}
+
+@media screen and (max-width: 320px) {
+  .profile__image {
+    width: 42%;
+    margin: 0 auto;
+  }
 }

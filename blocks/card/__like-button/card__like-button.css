@@ -10,10 +10,16 @@
 }
 
 .card__like-button:hover {
-  background-image: url("../../../images/like-button-hover.svg");
+  opacity: 0.5;
   cursor: pointer;
 }
 
 .card__like-button:focus {
   background-image: url("../../../images/like-button-active.svg");
+}
+
+@media screen and  (max-width: 320px) {
+  .card__like-button {
+    margin-right: 0;
+  }
 }

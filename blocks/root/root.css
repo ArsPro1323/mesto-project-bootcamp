@@ -2,10 +2,17 @@
   font-family: Inter, Arial, sans-serif;
   background: #000;
   color: #fff;
-  width: 74vw;
   max-width: 947.2px;
+  width: calc(100vw * 880 / 1280);
   margin: 0;
   padding: 45px 0 45px 0;
   margin: 0 auto;
   z-index: 0;
+}
+
+@media screen and (max-width: 320px) {
+  .root {
+    padding-top: 28px;
+    width: 100vw;
+  }
 }

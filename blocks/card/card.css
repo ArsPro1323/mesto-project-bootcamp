@@ -1,6 +1,7 @@
 .card {
   background-color: #fff;
   width: 100%;
+  aspect-ratio: 282 / 361;
   border-radius: 10px;
   overflow: hidden;
   display: flex;
