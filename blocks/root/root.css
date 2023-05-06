@@ -1,6 +1,6 @@
 .root {
   font-family: Inter, Arial, sans-serif;
-  background: #000;
+  background-color: #000;
   color: #fff;
   max-width: 947.2px;
   width: calc(100vw * 880 / 1280);
