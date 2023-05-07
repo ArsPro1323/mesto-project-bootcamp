@@ -25,74 +25,58 @@
     </section>
 
     <section class="elements">
-      <div class="card">
-        <img src="images/card-image-1.jpg" alt="Церковь на горе" class="card__image">
-        <div class="card__description">
-          <h2 class="card__name">Карачаевск</h2>
-          <button type="button" class="card__like-button"></button>
-        </div>
-      </div>
-
-      <div class="card">
-        <img src="images/card-image-2.jpg" alt="Гора на фоне заката" class="card__image">
-        <div class="card__description">
-          <h2 class="card__name">Гора Эльбрус</h2>
-          <button type="button" class="card__like-button"></button>
-        </div>
-      </div>
-
-      <div class="card">
-        <img src="images/card-image-3.jpg" alt="Заснеженные горы" class="card__image">
-        <div class="card__description">
-          <h2 class="card__name">Домбай</h2>
-          <button type="button" class="card__like-button"></button>
-        </div>
-      </div>
-
-      <div class="card">
-        <img src="images/card-image-4.jpg" alt="Горы на фоне цветущих цветов" class="card__image">
-        <div class="card__description">
-          <h2 class="card__name">Алтай</h2>
-          <button type="button" class="card__like-button"></button>
-        </div>
-      </div>
-
-      <div class="card">
-        <img src="images/card-image-5.jpg" alt="Замерзшее озеро" class="card__image">
-        <div class="card__description">
-          <h2 class="card__name">Озеро Байкал</h2>
-          <button type="button" class="card__like-button"></button>
-        </div>
-      </div>
-
-      <div class="card">
-        <img src="images/card-image-6.jpg" alt="Вулкан на закате" class="card__image">
-        <div class="card__description">
-          <h2 class="card__name">Камчатка</h2>
-          <button type="button" class="card__like-button"></button>
-        </div>
-      </div>
+      
     </section>
 
-    <div class="popup">
-      <button type="button" class="popup__close-button"></button>
-      <div class="popup__container">
-        <h3 class="popup__title">Редактировать профиль</h3>
-        <form name="change-profile-info" class="popup__form">
-          <input name="change-name" type="text" class="popup__input popup__input_edit_name">
-          <input name="change-description" type="text" class="popup__input popup__input_edit_description">
-          <button type="submit" class="popup__save-button">Сохранить</button>
+    <div class="popup-edit">
+      <button type="button" class="popup-edit__close-button"></button>
+      <div class="popup-edit__container">
+        <h3 class="popup-edit__title">Редактировать профиль</h3>
+        <form name="change-profile-info" class="popup-edit__form">
+          <input name="change-name" type="text" class="popup-edit__input popup-edit__input_edit_name">
+          <input name="change-description" type="text" class="popup-edit__input popup-edit__input_edit_description">
+          <button type="submit" class="popup-edit__save-button">Сохранить</button>
         </form>
       </div>
     </div>
+
+    <div class="popup-add-card">
+      <button type="button" class="popup-add-card__close-button"></button>
+      <div class="popup-add-card__container">
+        <h3 class="popup-add-card__title">Новое место</h3>
+        <form name="add-card" class="popup-add-card__form">
+          <input name="change-name" type="text" class="popup-add-card__input popup-add-card__input_edit_name">
+          <input name="change-description" type="text" class="popup-add-card__input popup-add-card__input_edit_description">
+          <button type="submit" class="popup-add-card__save-button">Сохранить</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="popup-card">
+      <div class="popup-card__content">
+        <img src="/images/card-image-1.jpg" alt="card image" class="popup-card__image">
+        <button class="popup-card__close-button"></button>
+        <p class="popup-card__description">Название</p>
+      </div>
+    </div>
+
   </main>
 
   <footer class="footer">
     <p class="footer__copyright">© 2020 Mesto Russia</p>
   </footer>
 
-  <script src="scripts/save-profile-data.js"></script>
-  <script src="scripts/close-and-open-modal-window.js"></script>
   
+  <script src="blocks/popup-edit/scripts/popup-edit__close-and-open.js"></script>
+  <script src="blocks/popup-edit/scripts/popup-edit__save.js"></script>
+
+  <script src="blocks/popup-add-card/scripts/popup-add-card__close-and-open.js"></script>
+  <script src="blocks/popup-add-card/scripts/popup-add-card__creating-default.js"></script>
+  <script src="blocks/popup-add-card/scripts/popup-add-card__creating-new.js"></script>
+
+  <script src="blocks/popup-card/scripts/popup-card__open-and-close.js"></script>
+  
+  <script src="blocks/card/scripts/card__like.js"></script>
+  <script src="blocks/card/scripts/card__delete.js"></script>
 </body>
 </html>

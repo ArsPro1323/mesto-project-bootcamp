@@ -1,0 +1,21 @@
+.popup-edit__container {
+  color: #000; 
+  background-color: #fff;
+  width: 360px;
+  min-height: 260px;
+  margin: auto;
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  padding: 35px;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: 1fr 8fr;
+  gap: 0;
+}
+
+@media screen and (max-width: 550px) {
+  .popup-edit__container {
+    width: 212px;
+    height: 252px;
+  }
+}
