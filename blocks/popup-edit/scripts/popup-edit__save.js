@@ -11,7 +11,7 @@ function handleFormSubmit(evt) {
   
   document.querySelector('.profile__name').textContent = String(name);
   document.querySelector('.profile__description').textContent = String(job);
-  document.querySelector('.popup-edit').setAttribute('class', 'popup-edit');
+  document.querySelector('.popup-edit').setAttribute('class', 'popup popup-edit');
 }
 
 formElement.addEventListener('submit', handleFormSubmit); 

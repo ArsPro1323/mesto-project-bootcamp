@@ -40,7 +40,7 @@ function handleFormSubmit(evt) {
 
   document.querySelector('.popup-add-card__input_edit_name').value = '';
   document.querySelector('.popup-add-card__input_edit_description').value = '';
-  document.querySelector('.popup-add-card').setAttribute('class', 'popup-add-card');
+  document.querySelector('.popup-add-card').setAttribute('class', 'popup popup-add-card');
   like_button.addEventListener('click', LikeSwitch);
   delete_button.addEventListener('click', DeleteCard);
   image.addEventListener('click', OpenCard);

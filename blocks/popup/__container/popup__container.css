@@ -1,8 +1,8 @@
-.popup-edit__container {
+.popup__container {
   color: #000; 
   background-color: #fff;
   width: 360px;
-  min-height: 260px;
+  height: 260px;
   margin: auto;
   box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
@@ -14,7 +14,7 @@
 }
 
 @media screen and (max-width: 550px) {
-  .popup-edit__container {
+  .popup__container {
     width: 212px;
     height: 252px;
   }
