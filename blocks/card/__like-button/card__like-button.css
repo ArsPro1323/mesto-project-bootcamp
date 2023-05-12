@@ -13,12 +13,12 @@
   cursor: pointer;
 }
 
-.card__like-button_on {
-  background-image: url("../../../images/like-button-active.svg");
-}
-
 .card__like-button_off {
   background-image: url("../../../images/like-button-disabled.svg");
+}
+
+.card__like-button_on {
+  background-image: url("../../../images/like-button-active.svg");
 }
 
 @media screen and  (max-width: 320px) {

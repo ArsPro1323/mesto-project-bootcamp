@@ -1,4 +1,4 @@
-.popup-edit__save-button {
+.popup__save-button {
   color: #fff;
   background-color: #000;
   font-weight: 400;
@@ -11,6 +11,6 @@
   cursor: pointer;
 }
 
-.popup-edit__save-button:hover {
+.popup__save-button:hover {
   opacity: 0.8;
 }
