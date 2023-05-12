@@ -14,6 +14,16 @@
   </header>
 
   <main class="main">
+    <template id="card">
+      <div class="card">
+        <button type="buton" class="card__delete-button"></button>
+        <img class="card__image" alt="" src="">
+        <div class="card__description">
+          <h2 class="card__name">template</h2><button type="buton" class="card__like-button card__like-button_off"></button>
+        </div>
+      </div>
+    </template>
+
     <section class="profile">
       <img src="images/profile-logo.jpg" alt="Jacques Yves Cousteau" class="profile__image">
       <div class="profile__info">
@@ -45,8 +55,8 @@
       <div class="popup__container popup-add-card__container">
         <h3 class="popup-add-card__title">Новое место</h3>
         <form name="add-card" class="popup__form popup-add-card__form">
-          <input name="change-name" type="text" class="popup__input popup-add-card__input popup-add-card__input_edit_name">
-          <input name="change-description" type="text" class=" popup__input popup-add-card__input popup-add-card__input_edit_description">
+          <input name="change-name" type="text" class="popup__input popup-add-card__input popup-add-card__input_edit_name" placeholder = 'Название'>
+          <input name="change-description" type="text" class=" popup__input popup-add-card__input popup-add-card__input_edit_description" placeholder = 'Ссылка на картинку'>
           <button type="submit" class="popup__save-button popup-add-card__save-button">Сохранить</button>
         </form>
       </div>
