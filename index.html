@@ -43,8 +43,8 @@
       <div class="popup__container popup-edit__container">
         <h3 class="popup__title popup-edit__title">Редактировать профиль</h3>
         <form name="change-profile-info" class="popup__form popup-edit__form">
-          <input name="change-name" type="text" class="popup__input popup-edit__input popup-edit__input_edit_name">
-          <input name="change-description" type="text" class="popup__input popup-edit__input popup-edit__input_edit_description">
+          <input name="change-name" type="text" class="popup__input popup-edit__input popup-edit__input_edit_name" required>
+          <input name="change-description" type="text" class="popup__input popup-edit__input popup-edit__input_edit_description" required>
           <button type="submit" class="popup__save-button popup-edit__save-button">Сохранить</button>
         </form>
       </div>
@@ -54,9 +54,11 @@
       <button type="button" class="popup__close-button popup-add-card__close-button"></button>
       <div class="popup__container popup-add-card__container">
         <h3 class="popup-add-card__title">Новое место</h3>
-        <form name="add-card" class="popup__form popup-add-card__form">
-          <input name="change-name" type="text" class="popup__input popup-add-card__input popup-add-card__input_edit_name" placeholder = 'Название'>
-          <input name="change-description" type="text" class=" popup__input popup-add-card__input popup-add-card__input_edit_description" placeholder = 'Ссылка на картинку'>
+        <form name="add-card" class="popup__form popup-add-card__form" novalidate>
+          <input id="card-name-input" name="change-name" type="text" class="popup__input popup-add-card__input popup-add-card__input_edit_name" placeholder = 'Название' required minlength="2" maxlength="40">
+          <span class="card-name-input-error form__input-error"></span>
+          <input id="card-description-input" name="change-description" type="text" class=" popup__input popup-add-card__input popup-add-card__input_edit_description" placeholder = 'Ссылка на картинку' required type="link">
+          <span class="card-description-input-error form__input-error"></span>
           <button type="submit" class="popup__save-button popup-add-card__save-button">Сохранить</button>
         </form>
       </div>
@@ -77,5 +79,6 @@
   </footer>
 
   <script src="scripts/index.js"></script>
+  <script src="scripts/validation.js"></script>
 </body>
 </html>

@@ -9,3 +9,15 @@
   line-height: 17px;
   padding-bottom: 13px;
 }
+
+.form__input_type_error {
+  border-bottom-color: red;
+} 
+
+.form__input-error {
+  color: red;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+}
+
