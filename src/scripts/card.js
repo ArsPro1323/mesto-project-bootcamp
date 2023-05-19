@@ -25,22 +25,26 @@ const initialCards = [
   }
 ];
 
-import { openPopupCard } from './modal.js';
-import { switchLike } from '../index.js';
 import { closePopup } from './modal.js';
 
 const cardTemplate = document.querySelector('#card').content;
-const cards = document.querySelector('.elements');
+const popup_card_image = document.querySelector('.popup-card__image');
+const popup_card_description = document.querySelector('.popup-card__description');
+
 import { popup_add_nameInput } from '../index.js';
 import { popup_add_jobInput } from '../index.js';
 import { cardPopup } from '../index.js';
+import { cards } from '../index.js';
+import { openPopup } from './modal.js';
+import { imagePopup } from '../index.js';
 
 function drawCard(link, card_name) {
   const card = cardTemplate.querySelector('.card').cloneNode(true);
   
-  card.querySelector('.card__image').src = link;
-  card.querySelector('.card__image').alt = card_name;
-  card.querySelector('.card__image').addEventListener('click', openPopupCard);
+  const card__image = card.querySelector('.card__image');
+  card__image.src = link;
+  card__image.alt = card_name;
+  card__image.addEventListener('click', openPopupCard);
 
   card.querySelector('.card__name').textContent = card_name;
 
@@ -49,6 +53,19 @@ function drawCard(link, card_name) {
   card.querySelector('.card__delete-button').addEventListener('click', deleteCard);
   
   return card;
+}
+
+function switchLike(evt) {
+  evt.preventDefault();
+  evt.currentTarget.classList.toggle("card__like-button_on");
+}
+
+function openPopupCard(evt) {
+  evt.preventDefault();
+  const item = evt.currentTarget.closest('.card');
+  popup_card_image.src = item.querySelector('.card__image').src;
+  popup_card_description.textContent = item.querySelector('.card__description').textContent;
+  openPopup(imagePopup);
 }
 
 function drawDefaultCards() {
@@ -62,17 +79,7 @@ function deleteCard(evt) {
   cardToDelete.remove();
 }
 
-function addCard(evt) {
-  evt.preventDefault();
-
-  const card_name = popup_add_nameInput.value;
-  const card_link = popup_add_jobInput.value;
-  
-  cards.prepend(drawCard(card_link, card_name));
-
-  closePopup(cardPopup);
-}
-
 export { drawDefaultCards };
 export { deleteCard };
-export { addCard };
+export { switchLike };
+export { drawCard };
