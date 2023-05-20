@@ -1,0 +1,10 @@
+.card__like-section {
+  margin-right: 0;
+  margin-left: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+}
