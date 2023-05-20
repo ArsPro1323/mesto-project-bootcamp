@@ -1,11 +1,12 @@
 .card__like-button {
-  width: 30px;
   height: 19px;
+  width: 20px;
   background-repeat: no-repeat;
   background-clip: padding-box;
-  margin: auto 10px auto auto;
+  margin: auto 0px auto auto;
   border: 0;
   background-color: rgba(0, 0, 0, 0);
+  background-size: contain;
 }
 
 .card__like-button:hover {
