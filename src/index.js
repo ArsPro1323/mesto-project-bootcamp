@@ -1,6 +1,16 @@
 import './pages/index.css';
+import { enableValidation, toggleButtonState } from './components/validate.js';
+import { closePopup } from './components/modal.js';
+import { openPopup } from './components/modal.js';
+import { drawDefaultCards, switchLike } from './components/card.js';
+import { drawCard } from './components/card.js';
+import { getInitialCards } from './components/api.js'
+import { pushCard } from './components/api.js';
+import { getProfileInfo } from './components/api.js'
+import { updateProfile } from './components/api.js';
+import { changeLogoProfile } from './components/api.js';
 
-import { getProfileId } from './scripts/api.js';
+
 const profilePopup = document.querySelector('.popup-edit');
 const cardPopup = document.querySelector('.popup-add-card');
 const profileLogoPopup = document.querySelector('.popup-edit-logo');
@@ -8,12 +18,12 @@ const profileEditSubmitButton = document.querySelector('.popup-edit__save-button
 const profileAddSubmitButton = document.querySelector('.popup-add-card__save-button');
 const imagePopup = document.querySelector('.popup-card');
 const profileLogoPopupLink = profileLogoPopup.querySelector('.popup-edit-logo__input')
-const popup_add_nameInput = document.querySelector('.popup-add-card__input_edit_name');
-const popup_add_jobInput = document.querySelector('.popup-add-card__input_edit_description');
-const popup_edit_nameInput = document.querySelector('.popup-edit__input_edit_name');
-const popup_edit_jobInput = document.querySelector('.popup-edit__input_edit_description');
-const profile_description = document.querySelector('.profile__description');
-const profile_title = document.querySelector('.profile__name');
+const popupAddNameInput = document.querySelector('.popup-add-card__input_edit_name');
+const popupAddJobInput = document.querySelector('.popup-add-card__input_edit_description');
+const popupEditNameInput = document.querySelector('.popup-edit__input_edit_name');
+const popupEditJobInput = document.querySelector('.popup-edit__input_edit_description');
+const profileDescription = document.querySelector('.profile__description');
+const profileTitle = document.querySelector('.profile__name');
 const cards = document.querySelector('.elements');
 const nameEditInput = document.querySelector('.popup-edit__input_edit_name');
 const jobEditInput = document.querySelector('.popup-edit__input_edit_description');
@@ -21,26 +31,9 @@ const logoInput = document.querySelector('.popup-edit-logo__input');
 const logo = document.querySelector('.profile__image');
 const popupChangeLogoForm = document.querySelector('.popup-edit-logo__form');
 const changeLogoSubmitButton = document.querySelector('.popup-edit-logo__save-button');
-
 let myId;
 
-getProfileId()
-   .then((result) => {
-    myId = result._id;
-   })
-   .catch((err) => {
-     console.log(err);
-   });
-
-export { myId };
-
 let initialCards = [];
-
-import { enableValidation, toggleButtonState } from './scripts/validate.js';
-import { closePopup } from './scripts/modal.js';
-import { openPopup } from './scripts/modal.js';
-import { drawDefaultCards, switchLike } from './scripts/card.js';
-import { drawCard } from './scripts/card.js';
 
 const settings = {
   formSelector: '.popup__form',
@@ -51,64 +44,44 @@ const settings = {
   errorClass: 'form__input-error_active'
 };
 
-import { getInitialCards } from './scripts/api.js'
+Promise.all([getProfileInfo(), getInitialCards()])
+  .then(([userData, cards]) => {
+      profileTitle.textContent = userData.name;
+      profileDescription.textContent = userData.about;
+      logo.style.backgroundImage = 'url(' + userData.avatar + ')';
+      myId = userData._id;
 
-getInitialCards()
-  .then((result) => {
-    for (let i = 0; i < result.length; i++) {
-      initialCards.push({name: result[i].name, link: result[i].link, likes: result[i].likes, owner: result[i].owner._id, id: result[i]._id});
-    }
-    drawDefaultCards();
+      for (let i = 0; i < cards.length; i++) {
+        initialCards.push({name: cards[i].name, link: cards[i].link, likes: cards[i].likes, owner: cards[i].owner._id, id: cards[i]._id});
+      }
+      drawDefaultCards();
+
   })
-  .catch((err) => {
+  .catch(err => {
     console.log(err);
   });
 
-export { initialCards };
-
 enableValidation(settings);
-
-import { pushCard } from './scripts/api.js';
 
 function addCard(evt) {
   evt.preventDefault();
   profileAddSubmitButton.textContent = 'Сохранение...';
-  const card_name = popup_add_nameInput.value;
-  const card_link = popup_add_jobInput.value;
+  const cardName = popupAddNameInput.value;
+  const card_link = popupAddJobInput.value;
   
-  pushCard(card_name, card_link)
+  pushCard(cardName, card_link)
     .then((result) => {
       cards.prepend(drawCard(result.link, result.name, [], myId, result._id));
+      closePopup(cardPopup);
+      document.removeEventListener('keydown', closeByEscape);
+    })
+    .finally(() => {
+      profileAddSubmitButton.textContent = 'Сохранить';
     })
     .catch((err) => {
       console.log(err);
     });
-
-  closePopup(cardPopup);
 }
-
-export { popup_add_nameInput };
-export { popup_add_jobInput };
-export { cardPopup };
-export { imagePopup };
-export { profile_description };
-export { profile_title };
-export { profilePopup };
-export { cards };
-
-import { getProfileInfo } from './scripts/api.js'
-
-getProfileInfo()
-  .then((result) => {
-    profile_title.textContent = result.name;
-    profile_description.textContent = result.about;
-    logo.style.backgroundImage = 'url(' + result.avatar + ')';
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-
-import { updateProfile } from './scripts/api.js';
 
 function changeProfile(evt) {
   evt.preventDefault();
@@ -118,19 +91,20 @@ function changeProfile(evt) {
   
   updateProfile(name, job)
     .then((result) => {
-      profile_title.textContent = result.name;
-      profile_description.textContent = result.about;
+      profileTitle.textContent = result.name;
+      profileDescription.textContent = result.about;
+      closePopup(profilePopup);
+      document.removeEventListener('keydown', closeByEscape);
+    })
+    .finally(() => {
+      profileEditSubmitButton.textContent = 'Сохранить';
     })
     .catch((err) => {
       console.log(err);
     });
-
-  profilePopup.classList.remove('popup_opened');
 }
 
-import { changeLogoProfile } from './scripts/api.js';
-
-function ChangeLogo(evt) {
+function changeLogo(evt) {
   evt.preventDefault();
   changeLogoSubmitButton.textContent = 'Сохранение...';
   const logoUrl = logoInput.value;
@@ -138,15 +112,20 @@ function ChangeLogo(evt) {
   changeLogoProfile(logoUrl)
     .then((result) => {
       logo.style.backgroundImage = 'url(' + result.avatar + ')';
+      closePopup(profileLogoPopup);
+      document.removeEventListener('keydown', closeByEscape);
+    })
+    .finally(() => {
+      changeLogoSubmitButton.textContent.textContent = 'Сохранить';
     })
     .catch((err) => {
       console.log(err);
     });
-  closePopup(profileLogoPopup);
 }
 
 document.querySelector('.popup-add-card__close-button').addEventListener("click", function() {
   closePopup(cardPopup);
+  document.removeEventListener('keydown', closeByEscape);
 });
 
 const inputAddList = Array.from(document.querySelector('.popup-add-card__form').querySelectorAll(settings.inputSelector));
@@ -155,75 +134,95 @@ const addButtonElement = document.querySelector('.popup-add-card__form').querySe
 const inputEditLogoList = Array.from(popupChangeLogoForm.querySelectorAll(settings.inputSelector));
 
 document.querySelector('.profile__add-button').addEventListener("click", function() {
-  popup_add_nameInput.value = '';
-  popup_add_jobInput.value = '';
+  popupAddNameInput.value = '';
+  popupAddJobInput.value = '';
   toggleButtonState(settings, inputAddList, addButtonElement);
-  profileAddSubmitButton.textContent = 'Сохранить';
   openPopup(cardPopup);
+  document.addEventListener('keydown', closeByEscape);
 });
 
 document.querySelector('.popup-add-card__form').addEventListener('submit', addCard);
 
 document.querySelector('.popup-card__close-button').addEventListener("click", function() {
   closePopup(imagePopup);
+  document.removeEventListener('keydown', closeByEscape);
 });
 
 document.querySelector('.profile__edit-button').addEventListener("click", function() {
-  popup_edit_nameInput.value = profile_title.textContent;
-  popup_edit_jobInput.value = profile_description.textContent;
-  profileEditSubmitButton.textContent = 'Сохранить';
+  popupEditNameInput.value = profileTitle.textContent;
+  popupEditJobInput.value = profileDescription.textContent;
   openPopup(profilePopup);
+  document.addEventListener('keydown', closeByEscape);
 });
 
 document.querySelector('.popup-edit__close-button').addEventListener("click", function() {
   closePopup(profilePopup);
+  document.removeEventListener('keydown', closeByEscape);
 });
 
 const popup_edit_form_element = document.querySelector('.popup-edit__form');
 
 popup_edit_form_element.addEventListener('submit', changeProfile); 
 
-popupChangeLogoForm.addEventListener('submit', ChangeLogo); 
+popupChangeLogoForm.addEventListener('submit', changeLogo); 
 
 cardPopup.addEventListener("click", (evt) => {
   if (evt.currentTarget === evt.target) {
     closePopup(cardPopup);
+    document.removeEventListener('keydown', closeByEscape);
   }
 })
 
 profilePopup.addEventListener("click", (evt) => {
   if (evt.currentTarget === evt.target) {
     closePopup(profilePopup);
+    document.removeEventListener('keydown', closeByEscape);
   }
 })
 
 imagePopup.addEventListener("click", (evt) => {
   if (evt.currentTarget === evt.target) {
     closePopup(imagePopup);
+    document.removeEventListener('keydown', closeByEscape);
   }
 })
 
-document.addEventListener('keydown', function (evt) {
-  if (evt.key === "Escape" && document.querySelector('.popup_opened') !== null) {
-    closePopup(document.querySelector('.popup_opened'));
+function closeByEscape(evt) {
+  if (evt.key === 'Escape') {
+    const openedPopup = document.querySelector('.popup_opened'); 
+    closePopup(openedPopup);
+    document.removeEventListener('keydown', closeByEscape);
   }
-}); 
+}
 
 document.querySelector('.profile__change-logo-button').addEventListener("click", function() {
   logoInput.value = '';
   toggleButtonState(settings, inputEditLogoList, changeLogoSubmitButton);
-  changeLogoSubmitButton.textContent = 'Сохранить';
   openPopup(profileLogoPopup);
+  document.addEventListener('keydown', closeByEscape);
 });
 
 document.querySelector('.popup-edit-logo__close-button').addEventListener("click", function() {
   closePopup(profileLogoPopup);
+  document.removeEventListener('keydown', closeByEscape);
 });
 
 profileLogoPopup.addEventListener("click", (evt) => {
   if (evt.currentTarget === evt.target) {
     closePopup(profileLogoPopup);
+    document.removeEventListener('keydown', closeByEscape);
   }
 })
 
 export { switchLike };
+export { myId };
+export { initialCards };
+export { popupAddNameInput };
+export { popupAddJobInput };
+export { cardPopup };
+export { imagePopup };
+export { profileDescription };
+export { profileTitle };
+export { profilePopup };
+export { cards };
+export { closeByEscape };

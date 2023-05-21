@@ -9,8 +9,10 @@ const isValid = (settings, formElement, inputElement) => {
 const toggleButtonState = (settings, inputList, buttonElement) => {
   if (hasInvalidInput(inputList)) {
     buttonElement.classList.add(settings.inactiveButtonClass);
+    buttonElement.setAttribute('disabled', '');
   } else {
     buttonElement.classList.remove(settings.inactiveButtonClass);
+    buttonElement.removeAttribute('disabled');
   }
 }; 
 
