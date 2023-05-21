@@ -1,25 +1,28 @@
 import { closePopup } from './modal.js';
 import { initialCards } from '../index.js';
 import { myId } from '../index.js';
-
-const cardTemplate = document.querySelector('#card').content;
-const popup_card_image = document.querySelector('.popup-card__image');
-const popup_card_description = document.querySelector('.popup-card__description');
-
 import { popup_add_nameInput } from '../index.js';
 import { popup_add_jobInput } from '../index.js';
 import { cardPopup } from '../index.js';
 import { cards } from '../index.js';
 import { openPopup } from './modal.js';
 import { imagePopup } from '../index.js';
+import { likeCard } from './api.js';
+import { dislikeCard } from './api.js';
+import { deleteMyCard } from './api.js';
+import { closeByEscape } from '../index.js';
+
+const cardTemplate = document.querySelector('#card').content;
+const popupCardImage = document.querySelector('.popup-card__image');
+const popupCardDescription = document.querySelector('.popup-card__description');
 
 function drawCard(link, card_name, likes, cardOwnerId, cardId) {
   const card = cardTemplate.querySelector('.card').cloneNode(true);
   card.id = cardId;
-  const card__image = card.querySelector('.card__image');
-  card__image.src = link;
-  card__image.alt = card_name;
-  card__image.addEventListener('click', openPopupCard);
+  const cardImage = card.querySelector('.card__image');
+  cardImage.src = link;
+  cardImage.alt = card_name;
+  cardImage.addEventListener('click', openPopupCard);
 
   card.querySelector('.card__like-number').textContent = likes.length;
 
@@ -41,29 +44,40 @@ function drawCard(link, card_name, likes, cardOwnerId, cardId) {
   
   return card;
 }
-import { likeCard } from './api.js';
-import { dislikeCard } from './api.js';
 
 function switchLike(evt) {
   evt.preventDefault();
-  const cardToDelete = evt.currentTarget.closest('.card');
-  evt.currentTarget.classList.toggle("card__like-button_on");
-  const numberOfLikes = evt.currentTarget.closest('.card__like-section').querySelector('.card__like-number');
-  if (String(evt.currentTarget.classList).includes('card__like-button_on')) {
-    numberOfLikes.textContent = Number(numberOfLikes.textContent) + 1;
-    likeCard(cardToDelete.id);
+  const CurrentLikeButton = evt.currentTarget;
+  const cardToLike = CurrentLikeButton.closest('.card');
+  const numberOfLikes = evt.currentTarget.closest('.card__like-section').querySelector('.card__like-number'); 
+  if (String(evt.currentTarget.classList).includes('card__like-button_on')) { 
+    dislikeCard(cardToLike.id).then((result) => {
+      CurrentLikeButton.classList.toggle("card__like-button_on");
+      numberOfLikes.textContent = result.likes.length;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   } else {
-    numberOfLikes.textContent = Number(numberOfLikes.textContent) - 1;
-    dislikeCard(cardToDelete.id);
+    likeCard(cardToLike.id).then((result) => {
+      CurrentLikeButton.classList.toggle("card__like-button_on");
+      numberOfLikes.textContent = result.likes.length;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   }
 }
 
 function openPopupCard(evt) {
   evt.preventDefault();
   const item = evt.currentTarget.closest('.card');
-  popup_card_image.src = item.querySelector('.card__image').src;
-  popup_card_description.textContent = item.querySelector('.card__description').textContent;
+  const description = item.querySelector('.card__description').textContent
+  popupCardImage.src = item.querySelector('.card__image').src;
+  popupCardImage.alt = description;
+  popupCardDescription.textContent = description;
   openPopup(imagePopup);
+  document.addEventListener('keydown', closeByEscape);
 }
 
 function drawDefaultCards() {
@@ -72,12 +86,14 @@ function drawDefaultCards() {
   }
 }
 
-import { deleteMyCard } from './api.js';
-
 function deleteCard(evt) {
   const cardToDelete = evt.currentTarget.closest('.card');
-  deleteMyCard(cardToDelete.id);
-  cardToDelete.remove();
+  deleteMyCard(cardToDelete.id).then((result) => {
+    cardToDelete.remove();
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 }
 
 export { drawDefaultCards };
